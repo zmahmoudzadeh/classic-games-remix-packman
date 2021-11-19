@@ -10,12 +10,16 @@ public class PlayerController : MonoBehaviour
     [Range(0f, 0.1f)] public float moveAmount;
     public Text scoreText;
     public Text heartText;
+    public Text finishText;
+    public GameObject[] ghosts;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         playerScore = 0;
         heartCount = 3;
+        finishText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -55,6 +59,20 @@ public class PlayerController : MonoBehaviour
            
             // destroy the star object
             Destroy(collision.gameObject);
+
+            if (playerScore == 36)
+            {
+                Debug.Log("YOU WIN!");
+                finishText.text = "YOU WIN!";
+                finishText.gameObject.SetActive(true);
+                ghosts = GameObject.FindGameObjectsWithTag("Ghost");
+                player = GameObject.FindGameObjectWithTag("Player");
+                Destroy(player);
+                foreach (GameObject ghost in ghosts)
+                {
+                    Destroy(ghost);
+                }
+            }
         }
 
         if (collision.gameObject.CompareTag("Ghost"))
@@ -65,8 +83,21 @@ public class PlayerController : MonoBehaviour
             Debug.Log("HEART: " + heartCount);
             heartText.text = "HEART: " + heartCount.ToString();
 
-            // destroy the ghost object
-            //Destroy(collision.gameObject);
+            if (heartCount <= 0)
+            {
+                Debug.Log("GAME OVER!");
+                finishText.text = "GAME OVER!";
+                finishText.gameObject.SetActive(true);
+                ghosts = GameObject.FindGameObjectsWithTag("Ghost");
+                player = GameObject.FindGameObjectWithTag("Player");
+                Destroy(player);
+                foreach(GameObject ghost in ghosts)
+                {
+                    Destroy(ghost);
+                }
+
+            }
+
             transform.position = new Vector3(0, 0.5f, 0);
         }
     }
