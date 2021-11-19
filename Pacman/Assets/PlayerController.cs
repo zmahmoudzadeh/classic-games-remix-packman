@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public int playerScore;
+    public int heart;
+    [Range(0f, 0.1f)] public float moveAmount;
     // Start is called before the first frame update
     void Start()
     {
         playerScore = 0;
+        heart = 3;
     }
 
     // Update is called once per frame
@@ -16,22 +19,22 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.position += new Vector3(0, 0, 0.01f);
+            transform.position += new Vector3(0, 0, moveAmount);
         }
 
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.position += new Vector3(0, 0, -0.01f);
+            transform.position += new Vector3(0, 0, -moveAmount);
         }
 
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.position += new Vector3(0.01f, 0, 0);
+            transform.position += new Vector3(moveAmount, 0, 0);
         }
 
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position += new Vector3(-0.01f, 0, 0);
+            transform.position += new Vector3(-moveAmount, 0, 0);
         }
     }
 
@@ -50,6 +53,22 @@ public class PlayerController : MonoBehaviour
 
             // destroy the star object
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Ghost"))
+        {
+            // access the food object config
+            //FoodItemConfig conf = collision.gameObject.GetComponent<FoodInstanceController>().config;
+
+            // increase the player's score
+            heart -= 1;
+
+            Debug.Log("HEART: " + heart);
+            //scoreText.text = "SCORE: " + playerScore.ToString();
+
+            // destroy the ghost object
+            //Destroy(collision.gameObject);
+            transform.position = new Vector3(0, 0.5f, 0);
         }
     }
 }

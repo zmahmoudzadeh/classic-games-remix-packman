@@ -990,6 +990,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScore: 0
+  heart: 0
+  moveAmount: 0.049
 --- !u!114 &421770597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1003,6 +1005,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScore: 0
+  heart: 0
+  moveAmount: 0
 --- !u!1 &503511411
 GameObject:
   m_ObjectHideFlags: 0
