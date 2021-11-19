@@ -1,17 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public int playerScore;
-    public int heart;
+    public int heartCount;
     [Range(0f, 0.1f)] public float moveAmount;
+    public Text scoreText;
+    public Text heartText;
+
     // Start is called before the first frame update
     void Start()
     {
         playerScore = 0;
-        heart = 3;
+        heartCount = 3;
     }
 
     // Update is called once per frame
@@ -42,29 +46,24 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Star"))
         {
-            // access the food object config
-            //FoodItemConfig conf = collision.gameObject.GetComponent<FoodInstanceController>().config;
 
             // increase the player's score
             playerScore += 1;
 
             Debug.Log("SCORE: " + playerScore);
-            //scoreText.text = "SCORE: " + playerScore.ToString();
-
+            scoreText.text = "SCORE: " + playerScore.ToString();
+           
             // destroy the star object
             Destroy(collision.gameObject);
         }
 
         if (collision.gameObject.CompareTag("Ghost"))
         {
-            // access the food object config
-            //FoodItemConfig conf = collision.gameObject.GetComponent<FoodInstanceController>().config;
+            // decrease the player's heart
+            heartCount -= 1;
 
-            // increase the player's score
-            heart -= 1;
-
-            Debug.Log("HEART: " + heart);
-            //scoreText.text = "SCORE: " + playerScore.ToString();
+            Debug.Log("HEART: " + heartCount);
+            heartText.text = "HEART: " + heartCount.ToString();
 
             // destroy the ghost object
             //Destroy(collision.gameObject);
